@@ -13,6 +13,7 @@ public class Cuenta {
     private String estado;
     private Integer saldo;
     private String tipo;
+    private Integer cliente;
     private String ultimaTransaccion;
     private String gerenteOficinaCreador;
     private String fechaCreacion;
