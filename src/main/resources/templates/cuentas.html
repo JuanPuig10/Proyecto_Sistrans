@@ -23,10 +23,9 @@
               <th>Numero Cuenta</th>
               <th>Estado</th>
               <th>Saldo</th>
-              <th>Tipo</th>
               <th>Cliente</th>
               <th>Ultima Transaccion</th>
-              <th>Gerente creador</th>
+              <th>Gerente Oficina Creador</th>
               <th>Fecha Creacion</th>
             </tr>
           </thead>
@@ -41,13 +40,10 @@
               <td th:text="${cuenta.ultima_transaccion}"></td>
               <td th:text="${cuenta.gerente_oficina_creador}"></td>
               <td th:text="${cuenta.fecha_creacion}"></td>
+
               <td>
-                <a th:href="@{clientes/{id}/edit(id=${clientes.id})}">Editar</a>
-                <a
-                  th:href="@{cuenta/{id}/delete(id=${cuenta.id})}"
-                  onclick="return confirm('¿Estás seguro de borrar esta cuenta?')"
-                  >Borrar</a
-                >
+                <a th:href="@{cuentas/{id}/edit(id=${cuenta.id})}">Editar</a>
+                <a th:href="@{cuentas/{id}/delete(id=${cuenta.id})}" onclick="return confirm('¿Estás seguro de borrar esta oficina?')">Borrar</a>
               </td>
             </tr>
           </th:block>
@@ -55,11 +51,8 @@
       </div>
 
       <div>
-        <a th:href="@{oficinas/new}" class="btn btn-primary">Añadir oficina</a>
-        <a th:href="@{puntosAtencion}" class="btn btn-primary"
-          >Añadir punto atencion</a
-        >
-        <a th:href="@{/administrador}" class="btn btn-primary">Volver Atrás</a>
+        <a th:href="@{cuentas/new}" class="btn btn-primary">Añadir Cuenta</a>
+        <a th:href='@{/gerenteGeneral}' class="btn btn-primary">Volver Atrás</a>
       </div>
       <br />
     </div>

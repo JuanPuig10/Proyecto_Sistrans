@@ -1,32 +1,62 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Cliente</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
-</head>
-<body>
-    <div class="container-flui"> 
-        <div class="row" style="background-color:rgb(100,133,6); font-size: 40px;" >
-        <div class="1-col" style="margin-left: 20px; font-size: 38px; font-family: 'Aptos Black';">Banco de los Andes</div>
-        </div>
-        <div class="row" style="margin-left: 140px; font-size: 30px; font-family: 'Aptos Black';"><br><br><br>Panel de funcionalidades<br><br></div>
-  
-        <div>
-            <form action="#" th:action="@{/clientes}" method="get">
-                <div th:replace="~{fragments/extracBancarioForm :: extracBancarioForm(titulo='Consultar extracto bancario')}"></div>
-            </form>
+  <head>
+    <title>oficinas</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
+    <script th:src="@{/css/jquery.min.js}"></script>
+    <script th:src="@{/css/bootstrap.min.js}"></script>
+  </head>
 
-        </div>
+  <body>
+    <div class="text-center">
+      <h1>Lista de oficinas</h1>
 
-        <div class="row">
-            <div class="1-col" style="margin-left: 150px;"> <a th:href="@{/}" class="btn btn-primary">Cerrar sesión</a> <br> <br> </div>
-        </div>
+      <div class="row">
+        <table class="table table-hover table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Dirección</th>
+              <th>Puntos Atencion</th>
+              <th>Gerente</th>
+              <th>Ciudad</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <th:block th:each="oficina : ${oficinas}">
+            <tr>
+              <td th:text="${oficina.id}"></td>
+              <td th:text="${oficina.nombre}"></td>
+              <td th:text="${oficina.direccion}"></td>
+              <td th:text="${oficina.numero_puntos_atencion}"></td>
+              <td th:text="${oficina.gerente}"></td>
+              <td th:text="${oficina.ciudad}"></td>
+              <td>
+                <a th:href="@{oficinas/{id}/edit(id=${oficina.id})}">Editar</a>
+                <a
+                  th:href="@{oficinas/{id}/delete(id=${oficina.id})}"
+                  onclick="return confirm('¿Estás seguro de borrar esta oficina?')"
+                  >Borrar</a
+                >
+              </td>
+            </tr>
+          </th:block>
+        </table>
+      </div>
 
+      <div>
+        <a th:href="@{oficinas/new}" class="btn btn-primary">Añadir oficina</a>
+        <a th:href="@{puntosAtencion}" class="btn btn-primary"
+          >Añadir punto atencion</a
+        >
+        <a th:href="@{/administrador}" class="btn btn-primary">Volver Atrás</a>
+      </div>
+      <br />
     </div>
-    
-</body>
+  </body>
 </html>
