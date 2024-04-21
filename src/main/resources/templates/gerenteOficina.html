@@ -1,23 +1,62 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Administrador</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <div class="container-flui"> 
-        <div class="row" style="background-color:rgb(100,133,6); font-size: 40px;" >
-        <div class="1-col" style="margin-left: 20px; font-size: 38px; font-family: 'Aptos Black';">Banco de los Andes</div>
+  </head>
+  <body>
+    <div class="container-flui">
+      <div
+        class="row"
+        style="background-color: rgb(100, 133, 6); font-size: 40px"
+      >
+        <div
+          class="1-col"
+          style="margin-left: 20px; font-size: 38px; font-family: 'Aptos Black'"
+        >
+          Banco de los Andes
         </div>
-        <div class="row" style="margin-left: 140px; font-size: 30px; font-family: 'Aptos Black';"><br><br><br>Panel de funcionalidades<br><br></div>
-        <div class="row">
-            <div class="1-col" style="margin-left: 150px;"> <a th:href="@{clientes/new}" class="btn btn-primary"> Registro y creacion de usuarios para clientes</a> <br> <br> </div>
+      </div>
+      <div
+        class="row"
+        style="margin-left: 140px; font-size: 30px; font-family: 'Aptos Black'"
+      >
+        <br /><br /><br />Panel de funcionalidades<br /><br />
+      </div>
+      <div class="row">
+        <div class="1-col" style="margin-left: 150px">
+          <a th:href="@{clientes/new}" class="btn btn-primary">
+            Registro y creacion de usuarios para clientes</a
+          >
+          <br />
+          <br />
         </div>
-
-        <!-- <div class="row">
+      </div>
+      <div class="row">
+        <div class="1-col" style="margin-left: 150px">
+          <a th:href="@{/oficinas}" class="btn btn-primary">
+            Crear y modificar información de oficinas</a
+          >
+          <br />
+          <br />
+        </div>
+      </div>
+      <div class="row">
+        <div class="1-col" style="margin-left: 150px">
+          <a th:href="@{/cuentas}" class="btn btn-primary"> Crear cuenta</a>
+          <br />
+          <br />
+        </div>
+      </div>
+      <!-- <div class="row">
             <div class="1-col" style="margin-left: 150px;"> <a th:href="@{/oficinas}" class="btn btn-primary"> Crear y modificar información de oficinas</a> </div>
         </div> -->
-
     </div>
+  </body>
+</html>
