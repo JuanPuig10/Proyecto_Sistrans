@@ -105,7 +105,7 @@ public class Cuenta {
     public int getGerente_oficina_creador() {
         return gerente_oficina_creador;
     }
-
+    
     public void setGerente_oficina_creador(int gerente_oficina_creador) {
         this.gerente_oficina_creador = gerente_oficina_creador;
     }

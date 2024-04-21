@@ -27,7 +27,7 @@ public class CuentasController {
   @GetMapping("/cuentas/new")
   public String cuentasForm(Model model) {
     model.addAttribute("cuenta", new Cuenta());
-    return "cuentas";
+    return "cuentaNew";
   }
 
   @PostMapping("/cuentas/new/save")

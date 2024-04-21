@@ -9,7 +9,7 @@
 </head>
 <body>
     </br>
-    <div th:fragment="cuentForm(titulo)" class="container border border-2 w-25">
+    <div th:fragment="cuentaForm(titulo)" class="container border border-2 w-25">
     <h1 class="text-center" th:text="${titulo}"></h1>
 
     <form>
@@ -25,8 +25,12 @@
         <input class="form-control" type="text" id="cliente" name="cliente" required th:value="${cuenta.cliente}" />
         <label class="col-form-label">Ultima Transaccion:</label>
         <input class="form-control" type="text" id="ultima_transaccion" name="ultima_transaccion" required th:value="${cuenta.ultima_transaccion}" />
+<!--
+
         <label class="col-form-label">Gerente Creador:</label>
-        <input class="form-control" type="text" id="gerente_oficina_creador" name="gerente_oficina_creador" required th:value="${cuenta.gerente_oficina_creador}" />
+        <input class="form-control" type="text" id="gerente_oficina_creador" name="gerente_oficina_creador" required th:value="${cuenta.gerente_oficina_creador.id}" />
+-->
+
         <label class="col-form-label">Fecha creacion:</label>
         <input class="form-control" type="text" id="fecha_creacion" name="fecha_creacion" required th:value="${cuenta.fecha_creacion}" />
         
