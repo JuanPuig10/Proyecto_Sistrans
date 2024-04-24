@@ -36,7 +36,7 @@ public class CuentasController {
         cuenta.getEstado(), cuenta.getSaldo(), cuenta.getTipo(),
         cuenta.getCliente().getId(), cuenta.getUltima_transaccion(),
         cuenta.getGerente_oficina_creador(),
-        cuenta.getFecha_creacion());
+                cuenta.getFecha_creacion());
     return "redirect:/cuentas";
 
   }

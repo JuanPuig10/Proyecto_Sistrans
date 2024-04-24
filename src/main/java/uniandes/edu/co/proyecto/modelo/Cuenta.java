@@ -102,7 +102,7 @@ public class Cuenta {
         this.ultima_transaccion = ultima_transaccion;
     }
 
-    public int getGerente_oficina_creador() {
+    public Integer getGerente_oficina_creador() {
         return gerente_oficina_creador;
     }
     
