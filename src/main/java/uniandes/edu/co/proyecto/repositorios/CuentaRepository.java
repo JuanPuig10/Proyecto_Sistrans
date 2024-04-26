@@ -44,6 +44,7 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
         @Param("gerente_oficina_creador") Integer gerente_oficina_creador,
         @Param("fecha_creacion") Date fecha_creacion);
 
+
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM cuentas WHERE id=:id", nativeQuery = true)

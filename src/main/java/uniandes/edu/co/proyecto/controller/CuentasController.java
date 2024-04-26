@@ -62,6 +62,8 @@ public class CuentasController {
 
   @GetMapping("/cuentas/{id}/delete")
   public String cuentaBorrar(@PathVariable("id") long id) {
+    Cuenta cuenta= new Cuenta();
+    
     cuentaRepository.eliminarCuenta(id);
     return "redirect:/cuentas";
   }
