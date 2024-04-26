@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crear cuenta</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+</head>
+<body>
+    </br>
+    <form th:action="@{/cuentas/new/save}" method="post">
+    <div th:replace="~{fragments/cuentaForm :: cuentaForm(titulo='Crear cuenta')}"></div>
+    </form>
+</body>
+</html>
