@@ -27,7 +27,7 @@ public class CuentasController {
   @GetMapping("/cuentas/new")
   public String cuentasForm(Model model) {
     model.addAttribute("cuenta", new Cuenta());
-    return "cuentas";
+    return "cuentaNew";
   }
 
   @PostMapping("/cuentas/new/save")
@@ -36,7 +36,7 @@ public class CuentasController {
         cuenta.getEstado(), cuenta.getSaldo(), cuenta.getTipo(),
         cuenta.getCliente().getId(), cuenta.getUltima_transaccion(),
         cuenta.getGerente_oficina_creador(),
-        cuenta.getFecha_creacion());
+                cuenta.getFecha_creacion());
     return "redirect:/cuentas";
 
   }
@@ -62,6 +62,8 @@ public class CuentasController {
 
   @GetMapping("/cuentas/{id}/delete")
   public String cuentaBorrar(@PathVariable("id") long id) {
+    Cuenta cuenta= new Cuenta();
+    
     cuentaRepository.eliminarCuenta(id);
     return "redirect:/cuentas";
   }

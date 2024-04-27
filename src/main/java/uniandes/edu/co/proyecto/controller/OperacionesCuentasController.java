@@ -16,50 +16,50 @@ public class OperacionesCuentasController {
   @Autowired
   private OperacionCuentaRepository operacionCuentaRepository;
 
-  @GetMapping("/operaciones_cuentas")
+  @GetMapping("/operacionesCuentas")
   public String operaciones_cuentas(Model model) {
-    model.addAttribute("operaciones_cuentas", operacionCuentaRepository.darOperacionesCuentas());
-    return "operaciones_cuentas";
+    model.addAttribute("operacionesCuentas", operacionCuentaRepository.darOperacionesCuentas());
+    return "operacionesCuentas";
   }
 
-  @GetMapping("/operaciones_cuentas/new")
+  @GetMapping("/operacionesCuentas/new")
   public String operaciones_cuentasForm(Model model) {
-    model.addAttribute("operacion_cuenta", new OperacionCuenta());
-    return "operaciones_cuentas";
+    model.addAttribute("operacionCuenta", new OperacionCuenta());
+    return "operacionesCuentasNew";
   }
 
-  @PostMapping("/operaciones_cuentas/new/save")
+  @PostMapping("/operacionesCuentas/new/save")
   public String operaciones_cuentasSave(@ModelAttribute OperacionCuenta operacionCuenta) {
     operacionCuentaRepository.insertarOperacioneCuenta(operacionCuenta.getTipo_operacion(), operacionCuenta.getFecha(),
         operacionCuenta.getCuenta_salida(), operacionCuenta.getMonto_operacion(), operacionCuenta.getCliente(),
         operacionCuenta.getPunto_atencion().getId(), operacionCuenta.getCuenta_llegada());
-    return "redirect:/operaciones_cuentas";
+    return "redirect:/operacionesCuentas";
   }
 
-  @GetMapping("/operaciones_cuentas/{id}/edit")
+  @GetMapping("/operacionesCuentas/{id}/edit")
   public String operaciones_cuentasEditForm(@PathVariable("id") int id, Model model) {
     OperacionCuenta operacionCuenta = operacionCuentaRepository.darOperacioneCuenta(id);
     if (operacionCuenta != null) {
-      model.addAttribute("operacion_cuenta", operacionCuenta);
-      return "operacion_cuentaEdit";
+      model.addAttribute("operacionesCuentas", operacionCuenta);
+      return "operacionesCuentas";
     } else {
-      return "redirect:/operaciones_cuentas";
+      return "redirect:/operacionesCuentas";
     }
   }
 
-  @PostMapping("/operaciones_cuentas/{id}/edit/save")
+  @PostMapping("/operacionesCuentas/{id}/edit/save")
   public String operaciones_cuentasEditSave(@PathVariable("id") long id,
       @ModelAttribute OperacionCuenta operacionCuenta) {
     operacionCuentaRepository.actualizarOperacioneCuenta(id, operacionCuenta.getTipo_operacion(),
         operacionCuenta.getFecha(), operacionCuenta.getCuenta_salida(), operacionCuenta.getMonto_operacion(),
         operacionCuenta.getCliente(), operacionCuenta.getCliente(), operacionCuenta.getCuenta_llegada());
-    return "redirect:/operaciones_cuentas";
+    return "redirect:/operacionesCuentas";
   }
 
-  @GetMapping("/operaciones_cuentas/{id}/delete")
+  @GetMapping("/operacionesCuentas/{id}/delete")
   public String operaciones_cuentasBorrar(@PathVariable("id") long id) {
     operacionCuentaRepository.eliminaOperacioneCuenta(id);
-    return "redirect:/operaciones_cuentas";
+    return "redirect:/operacionesCuentas";
   }
 
 }

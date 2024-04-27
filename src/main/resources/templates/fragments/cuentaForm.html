@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fragmento</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+    </br>
+    <div th:fragment="cuentaForm(titulo)" class="container border border-2 w-25">
+    <h1 class="text-center" th:text="${titulo}"></h1>
+
+    <form>
+        <label class="col-form-label">Numero de cuenta:</label>
+        <input class="form-control" type="text" id="numero_cuenta" name="numero_cuenta" required th:value="${cuenta.numero_cuenta}" />
+
+        <label class="col-form-label">Estado:</label>
+        <select class="form-control" id="estado" name="estado" required>
+        <option value="Activa" th:selected="${cuenta.estado eq 'Activa'}"> Activa </option>
+        </select>
+
+
+        <label class="col-form-label">Saldo :</label>
+        <input class="form-control" type="number" id="saldo" name="saldo" required th:value="${cuenta.saldo}" />
+
+        <label class="col-form-label">Tipo:</label>
+        <select class="form-control" id="tipo" name="tipo" required>
+        <option value="Ahorros" th:selected="${cuenta.estado eq 'Ahorros'}"> Ahorros </option>
+        <option value="Corriente" th:selected="${cuenta.estado eq 'Corriente'}"> Corriente </option>
+        <option value="AFC" th:selected="${cuenta.estado eq 'AFC'}"> AFC </option>
+   
+    </select>
+
+        <label class="col-form-label">Cliente:</label>
+        <input class="form-control" type="text" id="cliente" name="cliente" required th:value="${cuenta.cliente}" />
+        
+        <label class="col-form-label">Ultima Transaccion:</label>
+        <input class="form-control" type="text" id="ultima_transaccion" name="ultima_transaccion" required th:value="${cuenta.ultima_transaccion}" />
+        <label class="col-form-label">Gerente Creador:</label>
+        <input class="form-control" type="number" id="gerente_oficina_creador" name="gerente_oficina_creador" required th:value="${cuenta.gerente_oficina_creador}" /> 
+    
+        <label class="col-form-label">Fecha creacion:</label>
+        <input class="form-control" type="text" id="fecha_creacion" name="fecha_creacion" required th:value="${cuenta.fecha_creacion}" />
+        
+
+        <div class="text-center">
+            <input type="submit" value="Guardar" class="btn btn-primary">
+            <a th:href="@{/cuentas}" class="btn btn-primary">Cancelar</a>
+        </div>
+    </form>
+    
+</body>
+</html>

@@ -1,7 +1,7 @@
 package uniandes.edu.co.proyecto.modelo;
 
 import java.sql.Date;
-
+//commit 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -102,10 +102,10 @@ public class Cuenta {
         this.ultima_transaccion = ultima_transaccion;
     }
 
-    public int getGerente_oficina_creador() {
+    public Integer getGerente_oficina_creador() {
         return gerente_oficina_creador;
     }
-
+    
     public void setGerente_oficina_creador(int gerente_oficina_creador) {
         this.gerente_oficina_creador = gerente_oficina_creador;
     }
