@@ -15,9 +15,9 @@
     <form>
         <label class="col-form-label">Tipo de operacion:</label>
         <select class="form-control" id="tipo_operacion" name="tipo_operacion" required>
-        <option value="Consignacion" th:selected="${operacionCuenta.tipo_operacion eq 'Consignacion'}"> Consignacion </option>
-        <option value="Retiro" th:selected="${operacionCuenta.tipo_operacion eq 'Retiro'}"> Retiro </option>
-        <option value="Transferencia" th:selected="${operacionCuenta.tipo_operacion eq 'Transferencia'}"> Transferencia </option>
+        <option value="Consignacion" required th:selected="${operacionCuenta.tipo_operacion eq 'Consignacion'}"> Consignacion </option>
+        <option value="Retiro"required th:selected="${operacionCuenta.tipo_operacion eq 'Retiro'}"> Retiro </option>
+        <option value="Transferencia" required th:selected="${operacionCuenta.tipo_operacion eq 'Transferencia'}"> Transferencia </option>
         </select>
 
 
@@ -28,16 +28,16 @@
         <input class="form-control" type="text" id="cuenta_salida" name="cuenta_salida" required th:value="${operacionCuenta.cuenta_salida}" />
 
         <label class="col-form-label">Monto operacion:</label>
-        <input class="form-control" type="number" id="monto_operacion" name="monto_operacion" th:value="${operacionCuenta.monto_operacion}" />
+        <input class="form-control" type="number" id="monto_operacion" name="monto_operacion" required th:value="${operacionCuenta.monto_operacion}" />
 
         <label class="col-form-label">Cliente:</label>
-        <input class="form-control" type="number" id="cliente" name="cliente" th:value="${operacionCuenta.cliente}" />
+        <input class="form-control" type="number" id="cliente" name="cliente" required th:value="${operacionCuenta.cliente}" />
         
         <label class="col-form-label">Punto atencion:</label>
-        <input class="form-control" type="number" id="punto_atencion" name="punto_atencion" th:value="${operacionCuenta.punto_atencion}" />
+        <input class="form-control" type="number" id="punto_atencion" name="punto_atencion" required th:value="${operacionCuenta.punto_atencion}" />
 
         <label class="col-form-label">Cuenta llegada :</label>
-        <input class="form-control" type="text" id="cuenta_llegada" name="cuenta_llegada" required th:value="${operacionCuenta.cuenta_llegada}" />
+        <input class="form-control" type="text" id="cuenta_llegada" name="cuenta_llegada" th:value="${operacionCuenta.cuenta_llegada}" />
 
 
 
