@@ -44,10 +44,11 @@ public class CuentasController {
   @GetMapping("/cuentas/{id}/edit")
   public String cuentaEditForm(@PathVariable("id") int id, Model model) {
     Cuenta cuenta = cuentaRepository.darCuenta(id);
-    if (cuenta != null) {
+    if(cuenta.getSaldo()==0 && cuenta.getEstado().equals("Activa")){
       model.addAttribute("cuenta", cuenta);
       return "cuentaEdit";
-    } else {
+    }
+    else {
       return "redirect:/cuentas";
     }
   }
