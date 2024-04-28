@@ -38,6 +38,16 @@ public class UsuariosEmpleadosController {
         return "administrador";
     }
 
+    @GetMapping("/gerenteOficina")
+    public String volverGerenteOficina(Model model) {
+        return "gerenteOficina";
+    }
+
+    @GetMapping("/cajeroDos")
+    public String volverCajeroDos(Model model) {
+        return "cajeroDos";
+    }
+
     @RequestMapping(path= "/usuarios", method= RequestMethod.GET)
     public String usuariosEmpleadosCargo(@RequestParam("login") String login, @RequestParam("password") String password, Model model) {
 

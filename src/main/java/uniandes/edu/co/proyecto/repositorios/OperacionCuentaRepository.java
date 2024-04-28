@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 
 public interface OperacionCuentaRepository extends JpaRepository<OperacionCuenta, Integer> {
 
+
     @Query(value = "SELECT * FROM operaciones_cuentas", nativeQuery = true)
     Collection<OperacionCuenta> darOperacionesCuentas();
 
@@ -48,4 +49,8 @@ public interface OperacionCuentaRepository extends JpaRepository<OperacionCuenta
         @Param("cliente") Integer cliente,
         @Param("punto_atencion") Integer punto_atencion,
         @Param("cuenta_llegada") Integer cuenta_llegada);
+
+
+    @Query(value = "SELECT * FROM operaciones_cuentas WHERE fecha >= :fecha- 30 AND cuenta_salida = :numero_cuenta FOR UPDATE", nativeQuery = true)
+    Collection<OperacionCuenta> consultaOpCuentaUltimoMes(@Param("fecha") Date fecha, @Param("numero_cuenta") Integer numero_cuenta);
 }

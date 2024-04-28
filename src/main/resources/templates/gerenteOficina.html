@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Administrador</title>
+    <title>Gerente oficina</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
@@ -12,11 +12,21 @@
         <div class="1-col" style="margin-left: 20px; font-size: 38px; font-family: 'Aptos Black';">Banco de los Andes</div>
         </div>
         <div class="row" style="margin-left: 140px; font-size: 30px; font-family: 'Aptos Black';"><br><br><br>Panel de funcionalidades<br><br></div>
+        
         <div class="row">
             <div class="1-col" style="margin-left: 150px;"> <a th:href="@{clientes/new}" class="btn btn-primary"> Registro y creacion de usuarios para clientes</a> <br> <br> </div>
         </div>
+        
         <div class="row">
             <div class="1-col" style="margin-left: 150px;"> <a th:href="@{/cuentas}" class="btn btn-primary"> Crear una cuenta</a> <br> <br> </div>
+        </div>
+        
+        <div class="row">
+            <div class="1-col" style="margin-left: 150px;"> <a th:href="@{prestamos}" class="btn btn-primary">Prestamos</a> <br> <br> </div>
+        </div>
+        
+        <div class="row">
+            <div class="1-col" style="margin-left: 150px;"> <a th:href="@{/}" class="btn btn-primary">Cerrar sesión</a> <br> <br> </div>
         </div>
 
     </div>

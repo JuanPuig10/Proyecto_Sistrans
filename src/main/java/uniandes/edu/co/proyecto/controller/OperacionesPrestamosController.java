@@ -43,6 +43,9 @@ public class OperacionesPrestamosController {
     float diferencia = Math.abs(operacionPrestamo.getMonto_operacion() - prestamo.getValor_cuota());
     if(operacionPrestamo.getTipo_operacion().equals("pago_extraordinario") && diferencia > 0.0001f){
       return "operacionIncorreta";
+    } 
+    if(operacionPrestamo.getMonto_operacion() > prestamo.getSaldo_pendiente()){
+      return "operacionIncorreta";
     }
 
     operacionPrestamoRepository.insertarOperacionPrestamo(operacionPrestamo.getTipo_operacion(),
@@ -55,6 +58,10 @@ public class OperacionesPrestamosController {
         operacionPrestamo.getCliente(), operacionPrestamo.getPunto_atencion().getId());
 
     transaccionPrestamoRepository.insertarTransaccionPrestamo(id, operacionPrestamo.getCuenta_prestamo());
+
+    prestamoRepository.actualizarPrestamo(prestamo.getId(), prestamo.getEstado(), prestamo.getTipo(), prestamo.getMonto(),
+        prestamo.getInteres(), prestamo.getNumero_cuotas(), prestamo.getDia_mes_pagar_cuota(),
+        prestamo.getValor_cuota(), prestamo.getCliente().getId(), prestamo.getGerente_creador(), prestamo.getSaldo_pendiente() - operacionPrestamo.getMonto_operacion());
 
     return "cajeroDos";
   }
