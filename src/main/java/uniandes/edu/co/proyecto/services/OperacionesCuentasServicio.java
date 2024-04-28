@@ -31,7 +31,7 @@ public class OperacionesCuentasServicio {
             Collection<OperacionCuenta>  operacionesCuentas = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
             System.out.println(operacionesCuentas.size());
     
-            Thread.sleep(3000);
+            Thread.sleep(30000);
             operacionesCuentas = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
 
             return operacionesCuentas;
@@ -46,7 +46,7 @@ public class OperacionesCuentasServicio {
             Collection<OperacionCuenta>  operacionesCuentas = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
             System.out.println(operacionesCuentas.size());
     
-            Thread.sleep(3000);
+            Thread.sleep(30000);
             operacionesCuentas = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
 
             return operacionesCuentas;

@@ -35,7 +35,7 @@ public class OperacionesCuentasController {
           model.addAttribute("operacionesCuentas", operacionesCuentasServicio.consultaOpCuentaUltimoMesSerializable(numero_cuenta));
           return "operacionesCuentas";
         }else if (numero_cuentaCm != null) {
-          model.addAttribute("operacionesCuentas", operacionesCuentasServicio.consultaOpCuentaUltimoMesReadCommited(numero_cuenta));
+          model.addAttribute("operacionesCuentas", operacionesCuentasServicio.consultaOpCuentaUltimoMesReadCommited(numero_cuentaCm));
           return "operacionesCuentas";
         } else {
           model.addAttribute("operacionesCuentas", operacionCuentaRepository.darOperacionesCuentas());
