@@ -30,7 +30,8 @@ public interface OperacionCuentaRepository extends JpaRepository<OperacionCuenta
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO operaciones_cuentas (id, tipo_operacion, fecha, cuenta_salida,monto_operacion,cliente,punto_atencion,cuenta_llegada) VALUES(proyecto_sequence.nextval, :tipo_operacion, :fecha, :cuenta_salida, :monto_operacion, :cliente, :punto_atencion, :cuenta_llegada) ", nativeQuery = true)
-    void insertarOperacioneCuenta(@Param("tipo_operacion") String tipo_operacion,
+    void insertarOperacioneCuenta(
+        @Param("tipo_operacion") String tipo_operacion,
         @Param("fecha") Date fecha,
         @Param("cuenta_salida") Integer cuenta_salida,
         @Param("monto_operacion") Float monto_operacion,
