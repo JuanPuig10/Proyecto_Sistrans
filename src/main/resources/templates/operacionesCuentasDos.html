@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>operacion</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+    <script th:src="@{/css/jquery.min.js}"></script>
+    <script th:src="@{/css/bootstrap.min.js}"></script>
+</head>
+
+<body>
+    <div class="text-center">
+        <h1>Lista de operaciones sobre cuentas antes</h1>
+
+        <div class="row">
+
+        <table class="table table-hover table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>id operacion</th>
+                    <th>tipo operacion</th>
+                    <th>fecha</th>
+                    <th>cuenta de salida</th>
+                    <th>monto operacion</th>
+                    <th>cliente</th>
+                    <th>punto de atencion</th>
+                    <th>cuenta de llegada</th>
+
+                </tr>
+            </thead>
+            <th:block th:each="operacionesCuentas1 : ${operacionesCuentas1}">
+                <tr>
+                    <td th:text="${operacionesCuentas1.id}"></td>
+                    <td th:text="${operacionesCuentas1.tipo_operacion}"></td>
+                    <td th:text="${operacionesCuentas1.fecha}"></td>
+                    <td th:text="${operacionesCuentas1.cuenta_salida}"></td>
+                    <td th:text="${operacionesCuentas1.monto_operacion}"></td>
+                    <td th:text="${operacionesCuentas1.cliente}"></td>
+                    <td th:text="${operacionesCuentas1.punto_atencion.id}"></td>
+                    <td th:text="${operacionesCuentas1.cuenta_llegada}"></td>
+                </tr>
+            </th:block>
+
+        </table>
+
+        </div>
+
+        <h1>Lista de operaciones sobre cuentas después</h1>
+
+        <div class="row">
+
+        <table class="table table-hover table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>id operacion</th>
+                    <th>tipo operacion</th>
+                    <th>fecha</th>
+                    <th>cuenta de salida</th>
+                    <th>monto operacion</th>
+                    <th>cliente</th>
+                    <th>punto de atencion</th>
+                    <th>cuenta de llegada</th>
+
+                </tr>
+            </thead>
+            <th:block th:each="operacionesCuentas2 : ${operacionesCuentas2}">
+                <tr>
+                    <td th:text="${operacionesCuentas2.id}"></td>
+                    <td th:text="${operacionesCuentas2.tipo_operacion}"></td>
+                    <td th:text="${operacionesCuentas2.fecha}"></td>
+                    <td th:text="${operacionesCuentas2.cuenta_salida}"></td>
+                    <td th:text="${operacionesCuentas2.monto_operacion}"></td>
+                    <td th:text="${operacionesCuentas2.cliente}"></td>
+                    <td th:text="${operacionesCuentas2.punto_atencion.id}"></td>
+                    <td th:text="${operacionesCuentas2.cuenta_llegada}"></td>
+                </tr>
+            </th:block>
+
+        </table>
+
+        </div>
+        <div>
+            <a th:href='@{operacionesCuentas/new}' class="btn btn-primary">Añadir Operacion</a>
+            <a th:href='@{/clientes}' class="btn btn-primary">Volver Atrás</a>
+        </div>
+        <br />
+
+    </div>
+</body>
+
+</html>

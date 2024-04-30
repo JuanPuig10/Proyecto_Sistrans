@@ -3,7 +3,7 @@ package uniandes.edu.co.proyecto.services;
 
 import java.sql.Date;
 import java.util.Collection;
-
+import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -24,37 +24,48 @@ public class OperacionesCuentasServicio {
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class)
-    public Collection<OperacionCuenta> consultaOpCuentaUltimoMesSerializable(Integer numero_cuenta) throws InterruptedException {
+    public HashMap<String, Collection<OperacionCuenta>>  consultaOpCuentaUltimoMesSerializable(Integer numero_cuenta) throws InterruptedException {
         try{
+                HashMap<String, Collection<OperacionCuenta>> map = new HashMap<String, Collection<OperacionCuenta> >();
+                
                 Date fecha = new Date(System.currentTimeMillis());
         
                 Collection<OperacionCuenta>  operacionesCuentas = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
+                map.put("operacion_cuenta1", operacionesCuentas);
                 System.out.println(operacionesCuentas.size());
         
                 Thread.sleep(300);
-                operacionesCuentas = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
-    
-                return operacionesCuentas;
+                Collection<OperacionCuenta>  operacionesCuentas2 = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
+                map.put("operacion_cuenta2", operacionesCuentas2);
+
+                return map;
 
         }catch(InterruptedException e){
                 throw new InterruptedException("Error en la transaccion Serializable");
         }
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
-    public Collection<OperacionCuenta> consultaOpCuentaUltimoMesReadCommited(Integer numero_cuenta) throws InterruptedException {
-    
-            Date fecha = new Date(System.currentTimeMillis());
+    @Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+    public HashMap<String, Collection<OperacionCuenta>> consultaOpCuentaUltimoMesReadCommited(Integer numero_cuenta) throws InterruptedException {
+        try{
+                HashMap<String, Collection<OperacionCuenta>> map = new HashMap<String, Collection<OperacionCuenta> >();
+                
+                Date fecha = new Date(System.currentTimeMillis());
         
-            Collection<OperacionCuenta>  operacionesCuentas = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
-            System.out.println(operacionesCuentas.size());
-    
-            Thread.sleep(300);
-            operacionesCuentas = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
+                Collection<OperacionCuenta>  operacionesCuentas = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
+                map.put("operacion_cuenta1", operacionesCuentas);
+                System.out.println(operacionesCuentas.size());
+        
+                Thread.sleep(300);
+                Collection<OperacionCuenta>  operacionesCuentas2 = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
+                map.put("operacion_cuenta2", operacionesCuentas2);
 
-            return operacionesCuentas;
+                return map;
 
-
+        }catch(InterruptedException e){
+                throw new InterruptedException("Error en la transaccion Read Committed");
+        }
+ 
     }
 
 }

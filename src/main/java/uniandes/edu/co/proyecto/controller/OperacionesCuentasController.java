@@ -32,11 +32,13 @@ public class OperacionesCuentasController {
     while (true) {
       try {
         if (numero_cuenta != null) {
-          model.addAttribute("operacionesCuentas", operacionesCuentasServicio.consultaOpCuentaUltimoMesSerializable(numero_cuenta));
-          return "operacionesCuentas";
+          model.addAttribute("operacionesCuentas1", operacionesCuentasServicio.consultaOpCuentaUltimoMesSerializable(numero_cuenta).get("operacion_cuenta1"));
+          model.addAttribute("operacionesCuentas2", operacionesCuentasServicio.consultaOpCuentaUltimoMesSerializable(numero_cuenta).get("operacion_cuenta2"));
+          return "operacionesCuentasDos";
         }else if (numero_cuentaCm != null) {  
-          model.addAttribute("operacionesCuentas", operacionesCuentasServicio.consultaOpCuentaUltimoMesReadCommited(numero_cuentaCm));
-          return "operacionesCuentas";
+          model.addAttribute("operacionesCuentas1", operacionesCuentasServicio.consultaOpCuentaUltimoMesReadCommited(numero_cuentaCm).get("operacion_cuenta1"));
+          model.addAttribute("operacionesCuentas2", operacionesCuentasServicio.consultaOpCuentaUltimoMesReadCommited(numero_cuentaCm).get("operacion_cuenta2"));
+          return "operacionesCuentasDos";
         } else {
           model.addAttribute("operacionesCuentas", operacionCuentaRepository.darOperacionesCuentas());
         }
@@ -113,10 +115,11 @@ public class OperacionesCuentasController {
   }
 
   @GetMapping("/operacionesCuentas/consultaSerializable")
-  public String consultaOpCuentaUltimoMesSerializable(RedirectAttributes redirectAttributes, Integer numero_cuenta) {
+  public String consultaOpCuentaUltimoMesSerializable(RedirectAttributes redirectAttributes, Integer numero_cuenta,Model model) {
     try {
       System.out.println("entro");
       operacionesCuentasServicio.consultaOpCuentaUltimoMesSerializable(numero_cuenta);
+      model.addAttribute("operacionesCuentas", operacionesCuentasServicio.consultaOpCuentaUltimoMesSerializable(numero_cuenta));
     } 
     catch (InterruptedException e) {
       System.err.println("Error durante la consulta : " + e.getMessage());
