@@ -25,17 +25,20 @@ public class OperacionesCuentasServicio {
 
     @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class)
     public Collection<OperacionCuenta> consultaOpCuentaUltimoMesSerializable(Integer numero_cuenta) throws InterruptedException {
-    
-            Date fecha = new Date(System.currentTimeMillis());
+        try{
+                Date fecha = new Date(System.currentTimeMillis());
         
-            Collection<OperacionCuenta>  operacionesCuentas = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
-            System.out.println(operacionesCuentas.size());
+                Collection<OperacionCuenta>  operacionesCuentas = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
+                System.out.println(operacionesCuentas.size());
+        
+                Thread.sleep(300);
+                operacionesCuentas = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
     
-            Thread.sleep(30000);
-            operacionesCuentas = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
+                return operacionesCuentas;
 
-            return operacionesCuentas;
-
+        }catch(InterruptedException e){
+                throw new InterruptedException("Error en la transaccion Serializable");
+        }
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
@@ -46,7 +49,7 @@ public class OperacionesCuentasServicio {
             Collection<OperacionCuenta>  operacionesCuentas = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
             System.out.println(operacionesCuentas.size());
     
-            Thread.sleep(30000);
+            Thread.sleep(300);
             operacionesCuentas = operacionesCuentasRepository.consultaOpCuentaUltimoMes(fecha,numero_cuenta); 
 
             return operacionesCuentas;
