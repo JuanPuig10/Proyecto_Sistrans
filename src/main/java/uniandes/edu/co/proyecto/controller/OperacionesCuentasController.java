@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import uniandes.edu.co.proyecto.modelo.Cuenta;
 import uniandes.edu.co.proyecto.modelo.OperacionCuenta;
 import uniandes.edu.co.proyecto.repositorios.OperacionCuentaRepository;
 import uniandes.edu.co.proyecto.services.OperacionesCuentasServicio;
+import uniandes.edu.co.proyecto.repositorios.CuentaRepository;
 
 import java.sql.Date;
+import java.util.Optional;
 
 @Controller
 public class OperacionesCuentasController {
@@ -23,12 +26,13 @@ public class OperacionesCuentasController {
   @Autowired
   private OperacionesCuentasServicio operacionesCuentasServicio;
 
+  @Autowired
+  private CuentaRepository cuentaRepository;
+
   @GetMapping("/operacionesCuentas")
   public String operaciones_cuentas(Model model, Integer numero_cuenta,Integer numero_cuentaCm) {
-
     Date fecha = new Date(System.currentTimeMillis());
     int retryCount = 0;
-
     while (true) {
       try {
         if (numero_cuenta != null) {
@@ -80,6 +84,37 @@ public class OperacionesCuentasController {
 
   @PostMapping("/operacionesCuentas/new/save")
   public String operaciones_cuentasSave(@ModelAttribute OperacionCuenta operacionCuenta) {
+    //Cuenta cuentaLlegada=cuentaRepository.darCuenta(operacionCuenta.getCuenta_llegada());
+    Cuenta cuentaSalida=cuentaRepository.darCuenta(operacionCuenta.getCuenta_salida());
+    
+    if(operacionCuenta.getTipo_operacion().equals("Consignacion")){
+        //ACA SOLO SE MODIFICA CUENTA LLEGADA
+        Float valorOperacion=operacionCuenta.getMonto_operacion();
+        Float saldo=cuentaSalida.getSaldo();
+        valorOperacion=valorOperacion+saldo;
+        cuentaRepository.actualizarCuenta(cuentaSalida.getId(), cuentaSalida.getNumero_cuenta(), cuentaSalida.getEstado(), valorOperacion, cuentaSalida.getTipo(), cuentaSalida.getCliente().getId(), cuentaSalida.getUltima_transaccion(), cuentaSalida.getGerente_oficina_creador(), cuentaSalida.getFecha_creacion());
+    }
+    if (operacionCuenta.getTipo_operacion().equals("Retiro") ){
+      Float valorOperacion=operacionCuenta.getMonto_operacion();
+      Float saldo=cuentaSalida.getSaldo();
+      valorOperacion=saldo-valorOperacion;
+      cuentaRepository.actualizarCuenta(cuentaSalida.getId(), cuentaSalida.getNumero_cuenta(), cuentaSalida.getEstado(), valorOperacion, cuentaSalida.getTipo(), cuentaSalida.getCliente().getId(), cuentaSalida.getUltima_transaccion(), cuentaSalida.getGerente_oficina_creador(), cuentaSalida.getFecha_creacion());
+    }
+
+    if (operacionCuenta.getTipo_operacion().equals("Transferencia") ){
+      Cuenta cuentaLlegada=cuentaRepository.darCuenta(operacionCuenta.getCuenta_llegada());
+      Float valorOperacion=operacionCuenta.getMonto_operacion();
+      //AFECTO CUENTA DE SALIDA
+      Float saldoSalida=cuentaSalida.getSaldo();
+      saldoSalida=saldoSalida-valorOperacion;
+      //AFECTO CUENTA DE LLEGADA
+      Float saldoLLegada=cuentaLlegada.getSaldo();
+      saldoLLegada=saldoLLegada+valorOperacion;
+      cuentaRepository.actualizarCuenta(cuentaSalida.getId(), cuentaSalida.getNumero_cuenta(), cuentaSalida.getEstado(), saldoSalida, cuentaSalida.getTipo(), cuentaSalida.getCliente().getId(), cuentaSalida.getUltima_transaccion(), cuentaSalida.getGerente_oficina_creador(), cuentaSalida.getFecha_creacion());
+      cuentaRepository.actualizarCuenta(cuentaLlegada.getId(), cuentaLlegada.getNumero_cuenta(), cuentaLlegada.getEstado(), saldoLLegada, cuentaLlegada.getTipo(), cuentaLlegada.getCliente().getId(), cuentaLlegada.getUltima_transaccion(), cuentaLlegada.getGerente_oficina_creador(), cuentaLlegada.getFecha_creacion());
+
+    }
+    
     operacionCuentaRepository.insertarOperacioneCuenta(operacionCuenta.getTipo_operacion(), operacionCuenta.getFecha(),
         operacionCuenta.getCuenta_salida(), operacionCuenta.getMonto_operacion(), operacionCuenta.getCliente(),
         operacionCuenta.getPunto_atencion().getId(), operacionCuenta.getCuenta_llegada());
