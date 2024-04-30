@@ -2,6 +2,7 @@ package uniandes.edu.co.proyecto.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.transaction.Transactional;
 import uniandes.edu.co.proyecto.modelo.Cuenta;
 import uniandes.edu.co.proyecto.modelo.OperacionCuenta;
 import uniandes.edu.co.proyecto.repositorios.OperacionCuentaRepository;
@@ -179,4 +181,60 @@ public class OperacionesCuentasController {
     return "redirect:/operacionesCuentas";
   }
 
+}
+
+
+
+
+
+
+@PostMapping("/operacionCuenta/new/save")
+@Transactional
+public String transaccionGuardar (@ModelAttribute OperacionCuenta operacionCuenta, Model model) {
+  try {
+  Cuenta cuentaSalida=cuentaRepository.darCuenta(operacionCuenta.getCuenta_salida());
+
+  Float valorOperacion=operacionCuenta.getMonto_operacion();
+  Float saldo=cuentaSalida.getSaldo();
+  valorOperacion=valorOperacion+saldo;
+  cuentaRepository.actualizarCuenta(cuentaSalida.getId(), cuentaSalida.getNumero_cuenta(), cuentaSalida.getEstado(), valorOperacion, cuentaSalida.getTipo(), cuentaSalida.getCliente().getId(), cuentaSalida.getUltima_transaccion(), cuentaSalida.getGerente_oficina_creador(), cuentaSalida.getFecha_creacion());
+int rowsAffectedConsignar = cuentaRepository.actualizarSaldoConsignar (cuentaSalida.getId(), operacionCuenta.getMonto_operacion()); 
+int rowsAffectedRetirar = cuentaRepository.actualizarSaldoRetiro (operacionCuenta.getCuenta_salida().getId(), operacionCuenta.getMonto_operacion()); 
+if (rowsAffectedConsignar > 0 && rowsAffectedRetirar > 0) {
+  OperacionCuentaRepository.insertarTransaccion (operacionCuenta.getFecha(), operacionCuenta.getMonto_operacion(), operacionCuenta.getCuenta_salida().getId(), operacionCuenta.getCuenta_llegada().getId(), operacionCuenta.getPunto_atencion().getId());
+  return "redirect:/cuentas";
+} else {
+
+throw new RuntimeException("Error al hacer la transaccion: No se pudieron completar las actualizaciones de saldo");
+} 
+} catch (Exception e) {
+TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+model.addAttribute("errorMessage", e.getMessage());
+System.out.println(e.getMessage());
+return "error";
+}
+}
+}
+
+
+
+
+@PostMapping("/retirar/new/save")
+@Transactional
+public String retirarDinero (@ModelAttribute OperacionCuenta operacion_cuenta, Model model) {
+try {
+  int rowsAffectedRetirar = cuentaRepository.actualizarSaldoRetiro (operacion_cuenta.getId(), operacion_cuenta.getMonto_operacion()); 
+  if (rowsAffectedRetirar > 0) {
+    operacionCuentaRepository.insertarOperacion_cuenta (operacion_cuenta.getTipo_operacion(), operacion_cuenta.getFecha_operacion(), operacion_cuenta.getMonto_pago(), operacion_cuenta.getPunto_atencion().getId());
+return "redirect:/cuentas";
+  }
+else {
+throw new RuntimeException("Error al hacer el retiro: No se pudieron completar las actualizaciones de saldo");
+} }catch (Exception e) {
+TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+model.addAttribute("errorMessage", "Error al retirar dinero: " + e.getMessage());
+System.out.println(e.getMessage());
+return "redirect:/error";
+}
+}
 }

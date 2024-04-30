@@ -34,7 +34,7 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
     @Modifying
     @Transactional
     @Query(value = "UPDATE cuentas SET numero_cuenta=:numero_cuenta, estado =:estado, saldo = :saldo, tipo = :tipo, cliente = :cliente, ultima_transaccion = :ultima_transaccion, gerente_oficina_creador = :gerente_oficina_creador ,fecha_creacion= :fecha_creacion WHERE id = :id", nativeQuery = true)
-    void actualizarCuenta(@Param("id") long  id,
+    void actualizarCuenta(@Param("id") Integer  id,
         @Param("numero_cuenta") String numero_cuenta,
         @Param("estado") String estado,
         @Param("saldo") Float saldo,
@@ -48,4 +48,18 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Integer> {
     @Transactional
     @Query(value = "DELETE FROM cuentas WHERE id=:id", nativeQuery = true)
     void eliminarCuenta(@Param("id") long id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE cuentas SET saldo = :saldo", nativeQuery = true)
+    void actualizarSaldoConsignar(@Param("id") Integer  id,
+        @Param("saldo") Float saldo);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE cuentas SET saldo = :saldo", nativeQuery = true)
+    void actualizarSaldoRetiro(@Param("id") Integer  id,
+        @Param("saldo") Float saldo);
+
+        
 }
