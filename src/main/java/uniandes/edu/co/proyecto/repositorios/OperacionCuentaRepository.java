@@ -29,7 +29,7 @@ public interface OperacionCuentaRepository extends JpaRepository<OperacionCuenta
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO operaciones_cuentas (id, tipo_operacion, fecha, cuenta_salida,monto_operacion,cliente,punto_atencion,cuenta_llegada) VALUES(proyecto_sequence.nextval, :tipo_operacion, :fecha, :cuenta_salida, :monto_operacion, :cliente, :punto_atencion, :cuenta_llegada) ", nativeQuery = true)
+    @Query(value = "INSERT INTO operaciones_cuentas (id, tipo_operacion, fecha, cuenta_salida,monto_operacion,cliente,punto_atencion,cuenta_llegada) VALUES(proyecto_sequence.nextval, :tipo_operacion, TO_DATE(:fecha, 'DD/MM/YYYY'), :cuenta_salida, :monto_operacion, :cliente, :punto_atencion, :cuenta_llegada) ", nativeQuery = true)
     void insertarOperacioneCuenta(
         @Param("tipo_operacion") String tipo_operacion,
         @Param("fecha") Date fecha,
@@ -41,7 +41,7 @@ public interface OperacionCuentaRepository extends JpaRepository<OperacionCuenta
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE operaciones_cuentas SET tipo_operacion = :tipo_operacion, fecha= :fecha, cuenta_salida= :cuenta_salida, monto_operacion= :monto_operacion, cliente= :cliente,punto_atencion = :punto_atencion, cuenta_llegada = :cuenta_llegada WHERE id = :id", nativeQuery = true)
+    @Query(value = "UPDATE operaciones_cuentas SET tipo_operacion = :tipo_operacion, fecha= TO_DATE(:fecha, 'DD/MM/YYYY'), cuenta_salida= :cuenta_salida, monto_operacion= :monto_operacion, cliente= :cliente,punto_atencion = :punto_atencion, cuenta_llegada = :cuenta_llegada WHERE id = :id", nativeQuery = true)
     void actualizarOperacioneCuenta(@Param("id") long id,
         @Param("tipo_operacion") String tipo_operacion,
         @Param("fecha") Date fecha,

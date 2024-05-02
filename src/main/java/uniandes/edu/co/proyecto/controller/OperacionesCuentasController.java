@@ -30,7 +30,7 @@ public class OperacionesCuentasController {
   private CuentaRepository cuentaRepository;
 
   @GetMapping("/operacionesCuentas")
-  public String operaciones_cuentas(Model model, Integer numero_cuenta,Integer numero_cuentaCm) {
+  public String operaciones_cuentas(Model model, Integer numero_cuenta ,Integer numero_cuentaCm) {
     Date fecha = new Date(System.currentTimeMillis());
     int retryCount = 0;
     while (true) {
@@ -85,35 +85,46 @@ public class OperacionesCuentasController {
   }
 
   @PostMapping("/operacionesCuentas/new/save")
-  public String operaciones_cuentasSave(@ModelAttribute OperacionCuenta operacionCuenta) {
+  public String operaciones_cuentasSave(@ModelAttribute OperacionCuenta operacionCuenta, RedirectAttributes redirectAttributes) {
     //Cuenta cuentaLlegada=cuentaRepository.darCuenta(operacionCuenta.getCuenta_llegada());
     Cuenta cuentaSalida=cuentaRepository.darCuenta(operacionCuenta.getCuenta_salida());
     
     if(operacionCuenta.getTipo_operacion().equals("Consignacion")){
         //ACA SOLO SE MODIFICA CUENTA LLEGADA
-        Float valorOperacion=operacionCuenta.getMonto_operacion();
-        Float saldo=cuentaSalida.getSaldo();
-        valorOperacion=valorOperacion+saldo;
-        cuentaRepository.actualizarCuenta(cuentaSalida.getId(), cuentaSalida.getNumero_cuenta(), cuentaSalida.getEstado(), valorOperacion, cuentaSalida.getTipo(), cuentaSalida.getCliente().getId(), cuentaSalida.getUltima_transaccion(), cuentaSalida.getGerente_oficina_creador(), cuentaSalida.getFecha_creacion());
+        try {
+          Float valorOperacion=operacionCuenta.getMonto_operacion();
+          Float saldo=cuentaSalida.getSaldo();
+          operacionesCuentasServicio.operacionConsignacion(cuentaSalida,valorOperacion,saldo);
+        } 
+        catch (InterruptedException e) {
+          System.err.println("Error : " + e.getMessage());
+          redirectAttributes.addFlashAttribute("errorMessage", "error");
+          return "redirect:/operacionesCuentas";
+          }
     }
     if (operacionCuenta.getTipo_operacion().equals("Retiro") ){
-      Float valorOperacion=operacionCuenta.getMonto_operacion();
-      Float saldo=cuentaSalida.getSaldo();
-      valorOperacion=saldo-valorOperacion;
-      cuentaRepository.actualizarCuenta(cuentaSalida.getId(), cuentaSalida.getNumero_cuenta(), cuentaSalida.getEstado(), valorOperacion, cuentaSalida.getTipo(), cuentaSalida.getCliente().getId(), cuentaSalida.getUltima_transaccion(), cuentaSalida.getGerente_oficina_creador(), cuentaSalida.getFecha_creacion());
+      try {
+        Float valorOperacion=operacionCuenta.getMonto_operacion();
+        Float saldo=cuentaSalida.getSaldo();
+        operacionesCuentasServicio.operacionRetiro(cuentaSalida, valorOperacion,saldo);
+      } 
+      catch (InterruptedException e) {
+        System.err.println("Error : " + e.getMessage());
+        redirectAttributes.addFlashAttribute("errorMessage", "error");
+        return "redirect:/operacionesCuentas";
+        }
     }
 
     if (operacionCuenta.getTipo_operacion().equals("Transferencia") ){
-      Cuenta cuentaLlegada=cuentaRepository.darCuenta(operacionCuenta.getCuenta_llegada());
-      Float valorOperacion=operacionCuenta.getMonto_operacion();
-      //AFECTO CUENTA DE SALIDA
-      Float saldoSalida=cuentaSalida.getSaldo();
-      saldoSalida=saldoSalida-valorOperacion;
-      //AFECTO CUENTA DE LLEGADA
-      Float saldoLLegada=cuentaLlegada.getSaldo();
-      saldoLLegada=saldoLLegada+valorOperacion;
-      cuentaRepository.actualizarCuenta(cuentaSalida.getId(), cuentaSalida.getNumero_cuenta(), cuentaSalida.getEstado(), saldoSalida, cuentaSalida.getTipo(), cuentaSalida.getCliente().getId(), cuentaSalida.getUltima_transaccion(), cuentaSalida.getGerente_oficina_creador(), cuentaSalida.getFecha_creacion());
-      cuentaRepository.actualizarCuenta(cuentaLlegada.getId(), cuentaLlegada.getNumero_cuenta(), cuentaLlegada.getEstado(), saldoLLegada, cuentaLlegada.getTipo(), cuentaLlegada.getCliente().getId(), cuentaLlegada.getUltima_transaccion(), cuentaLlegada.getGerente_oficina_creador(), cuentaLlegada.getFecha_creacion());
+      try {
+        operacionesCuentasServicio.operacionTransferencia(operacionCuenta,cuentaSalida);
+
+      } 
+      catch (InterruptedException e) {
+        System.err.println("Error : " + e.getMessage());
+        redirectAttributes.addFlashAttribute("errorMessage", "error");
+        return "redirect:/operacionesCuentas";
+        }
 
     }
     

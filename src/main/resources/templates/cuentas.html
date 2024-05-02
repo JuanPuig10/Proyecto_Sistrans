@@ -37,7 +37,7 @@
               <td th:text="${cuenta.estado}"></td>
               <td th:text="${cuenta.saldo}"></td>
               <td th:text="${cuenta.tipo}"></td>
-              <td th:text="${cuenta.cliente}"></td>
+              <td th:text="${cuenta.cliente.nombre}"></td>
               <td th:text="${cuenta.ultima_transaccion}"></td>
               <td th:text="${cuenta.gerente_oficina_creador}"></td>
               <td th:text="${cuenta.fecha_creacion}"></td>
@@ -52,7 +52,7 @@
       </div>
 
       <div>
-        <a th:href="@{cuentas/new}" class="btn btn-primary">Añadir Cuenta</a>
+        <a th:href="@{/cuentas/new}" class="btn btn-primary">Añadir Cuenta</a>
         <a th:href='@{/gerenteOficina}' class="btn btn-primary">Volver Atrás</a>
       </div>
       <br />

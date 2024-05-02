@@ -45,6 +45,7 @@ public class ClientesController {
         }
         else
         {
+            int a=1;
             Collection<RespuestaExtracto> informacion = clienteRepository.infoExtracto(numMes,numCuenta,anio);
             model.addAttribute("clientesExtracto", clienteRepository.infoExtracto(numMes, numCuenta, anio));
 
